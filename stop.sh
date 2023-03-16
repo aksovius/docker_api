@@ -1,0 +1,1 @@
+kill $(pgrep -P $uvicorn_pid)
