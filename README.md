@@ -19,19 +19,19 @@ This is a Python API server that uses FastAPI and Strawberry to provide Docker c
 
 1. Clone this repository.
 2. Install the required packages with `pip install -r requirements.txt`.
-3. Start the server with `python app.py`.
+3. Start the server with `uvicorn server:app`.
 
 ### Endpoints
 
-- `/containers`: List all running containers
-- `/containers/{id}`: Get details for a specific container
-- `/containers/{id}/logs`: Get logs for a specific container
-- `/containers/{id}/stats`: Get stats for a specific container
-- `/containers/{id}/start`: Start a specific container
-- `/containers/{id}/stop`: Stop a specific container
-- `/containers/{id}/remove`: Remove a specific container
-- `/gpus`: List all NVIDIA GPUs
-- `/gpus/{id}/stats`: Get stats for a specific NVIDIA GPU
+- `/graphql`: GraphQL endpoint
+- ` {
+  containerList {
+    id
+    image
+    name
+    status
+  }
+}`: List all running containers
 
 ## License
 
