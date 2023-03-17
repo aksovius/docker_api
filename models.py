@@ -1,13 +1,14 @@
 import strawberry
 
-@strawberry.type
-class User:
-    name: str
-    age: int
     
 @strawberry.type
 class Container:
+    index: int
     id: str
     name: str
     status: str
-    image: str
+    gpu: int
+    device: int
+    total: str
+    free: str
+    used: str

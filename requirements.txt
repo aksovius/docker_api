@@ -2,3 +2,5 @@ fastapi
 uvicorn
 strawberry
 docker
+nvitop
+websockets
