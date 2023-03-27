@@ -130,4 +130,4 @@ dmypy.json
 dockerSDK.ipynb
 stop.sh
 stop.sh
-__pycache__/types.cpython-310.pyc
+__pycache__/*

@@ -4,3 +4,4 @@ strawberry
 docker
 nvitop
 websockets
+influxdb

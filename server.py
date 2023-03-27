@@ -9,6 +9,7 @@ import asyncio
 import docker
 from nvitop import MigDevice
 import json
+
 client = docker.from_env()
 mig = MigDevice.all()
 @strawberry.type
@@ -28,15 +29,22 @@ graphql_app = GraphQL(schema)
 app = FastAPI()
 app.add_route("/graphql", graphql_app)
 
-@app.websocket("/graphql/wss")
-async def websocket_endpoint(websocket: WebSocket):
-    sender = websocket.cookies.get("X-Authorization")
-    print('Auth:', sender)
-    if sender:
-        await websocket.accept()
-        try:
-            while True:
-                await websocket.send_text(json.dumps(queries.get_containers(ws=True)))
-                await asyncio.sleep(5)
-        except WebSocketDisconnect:
-            print('disconnected')
+# @app.websocket("/graphql/wss")
+# async def websocket_endpoint(websocket: WebSocket):
+#     sender = websocket.cookies.get("X-Authorization")
+#     export = Exporter()
+#     print('Auth:', sender)
+    # if sender:
+    #     await websocket.accept()
+    #     try:
+    #         for i in range(60):
+    #             #export.start()
+    #             #await websocket.send_text(json.dumps(queries.get_containers(ws=True)))
+    #             print((60 - i)*5, 'sec left')
+    #             try:
+    #                 await asyncio.sleep(5)
+    #             except asyncio.CancelledError:
+    #                 print("CancelledError")
+    #     except WebSocketDisconnect:
+            
+    #         print('disconnected')
