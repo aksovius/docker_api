@@ -14,7 +14,7 @@ client = docker.from_env()
 mig = MigDevice.all()
 @strawberry.type
 class Query:
-    container_list = queries.resolve_container_list
+    container_status = queries.resolve_status_list
 @strawberry.type
 class Mutation:
     stop_container = mutations.resolve_stop_container

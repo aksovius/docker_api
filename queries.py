@@ -17,19 +17,16 @@ def get_gpu_status():
 
 def get_containers(ws = False):
     containers = []
-    gpu_status = get_gpu_status()
-    index = 0
     for container in client.containers.list(all=True):
           if container.image.tags[0] in ["tf2:0.05", "tf1:0.01"]:
-                cnt = dict(id=container.short_id, name=container.name, status=container.status)
-         
+                cnt = dict(id=container.short_id,  status=container.status)
                 if ws:
-                    containers.append(dict(**cnt, **gpu_status[27-index]))
+                    containers.append(cnt)
                 else:
-                    containers.append(Container(**cnt, **gpu_status[27-index]))
-                index += 1
+                    containers.append(Container(**cnt))
+              
     return containers  
 
 @strawberry.field
-def resolve_container_list(self) -> List[Container]:
+def resolve_status_list(self) -> List[Container]:
     return get_containers()
