@@ -26,15 +26,17 @@ write_api = client.write_api(write_options=SYNCHRONOUS)
     
 def update_docker():
     points = []
-    index = 'a'
+    #index = 'a'
     for container in docker_client.containers.list(all=True):
-            if (container.status == "running" and container.image.tags[0] in ["tf2:0.05", "tf1:0.01"]):
-                point = Point("docker_stat").tag("index", index).tag("id", container.short_id).field("status", True)
-            elif (container.image.tags[0] in ["tf2:0.05", "tf1:0.01"]):
-                point = Point("docker_stat").tag("index", index).tag("id", container.short_id).field("status", False)
+            if (container.status == "running" and container.name.startswith("sandbox")):
+                #point = Point("docker_stat").tag("index", index).tag("name", container.name).field("status", True)
+                point = Point("docker_stat").tag("name", container.name).field("status", True) 
+            elif (container.name.startswith("sandbox")):
+                #point = Point("docker_stat").tag("index", index).tag("name", container.name).field("status", False)
+                point = Point("docker_stat").tag("name", container.name).field("status", False)
             else: continue
             points.append(point)
-            index = chr(ord(index) + 1)
+            #index = chr(ord(index) + 1)
     write_api.write(bucket=DOCKER_BUCKET, record=points)
     print("Write docker state at {0}".format(datetime.datetime.fromtimestamp(time.time()).strftime('%c')))
    

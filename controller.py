@@ -71,3 +71,26 @@ class DockerController:
         for container in self.client.containers.list():
             if container.short_id == id:
                 container.exec_run('conda run -n tf python /home/user/workdir/example/unet.py', detach=True)
+                
+    def start_one(self, name:str, port:int, gpu:int, device:int, user_dir:str):
+        container = self.client.containers.run(
+                    'tf2:0.05', 
+                    detach=True, 
+                    ports={'8080/tcp': port}, 
+                    volumes={'/home/gil/Desktop/colab/': {'bind': '/home/user/workdir/data', 'mode': 'ro'}, 
+                            '/home/gil/Desktop/alexander/code-server/user_dir': {'bind': '/home/user/workdir/example', 'mode': 'ro'},
+                            '/etc/timezone': {'bind': '/etc/timezone', 'mode': 'ro'}, 
+                            '/etc/localtime': {'bind': '/etc/localtime', 'mode': 'ro'},
+                            '/home/gil/Desktop/alexander/code-server/config.yaml': {'bind': '/home/user/.config/code-server/config.yaml', 'mode': 'ro'},
+                            '/home/gil/Desktop/users_data/'+ user_dir : {'bind': '/home/user/workdir', 'mode': 'rw'}
+                            }, 
+                    shm_size='1g', 
+                    environment=['TZ=Asia/Seoul'], 
+                    remove=False, 
+                    name=name,
+                    device_requests=[{'DeviceIDs': [f'{gpu}:{device}'],
+                                    'Capabilities': [['gpu']],
+                                    }], 
+                    command='code-server',
+                    entrypoint='bash')
+        print("Run: " + container.short_id  + " gpu: " + str(gpu) + " device: " + str(device))
