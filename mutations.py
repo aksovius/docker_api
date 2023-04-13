@@ -18,7 +18,7 @@ write_api = db_client.write_api(write_options=SYNCHRONOUS)
 
 def run_container(name, port, gpu, device, userDir):
     container = client.containers.run(
-                'tf2:0.05', 
+                'tf2:1.0', 
                 detach=True, 
                 ports={'8080/tcp': port}, 
                 volumes={'/home/gil/Desktop/colab/': {'bind': '/home/user/workdir/data', 'mode': 'ro'}, 
@@ -46,15 +46,22 @@ def run_container(name, port, gpu, device, userDir):
 async def resolve_stop_container(self, name: str)-> bool:
     print(name)
     container = client.containers.get(name)
-    container.remove(force=True)
-    point = Point("docker_stat").tag("name", name).field("status", False)
-    write_api.write(bucket=DOCKER_BUCKET, record=point)
-    print(f"Container {container.short_id} stopped")
+    if(container):
+        try:
+            container.remove(force=True)
+            point = Point("docker_stat").tag("name", name).field("status", False)
+            write_api.write(bucket=DOCKER_BUCKET, record=point)
+            print(f"Container {container.short_id} removed")
+        except Exception as e:
+            print(e)
     return True
 
 @strawberry.mutation
 async def resolve_start_container(self, name:str, port:int, gpu:int, device:int, userDir:str)-> bool:
-    return run_container(name, port, gpu, device, userDir)
+    try: run_container(name, port, gpu, device, userDir)
+    except Exception as e:
+        print(e)
+    return True
     
 
 @strawberry.mutation
