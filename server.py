@@ -14,6 +14,7 @@ class Mutation:
     reload_container = mutations.resolve_reload_container
     stop_all_containers = mutations.resolve_stop_all_container
     start_containers = mutations.resolve_start_containers
+    
             
 schema = strawberry.Schema(query=Query, mutation=Mutation, )
 graphql_app = GraphQL(schema)

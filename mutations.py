@@ -1,3 +1,5 @@
+import typing
+from strawberry.file_uploads import Upload
 import strawberry
 import docker
 from influxdb_client import  Point, InfluxDBClient
