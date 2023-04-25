@@ -6,7 +6,7 @@ import zipfile
 from io import BytesIO
 from fastapi.responses import FileResponse, StreamingResponse
 
-ALLOWED_EXTENSIONS = {'doc', 'ppt', 'pdf', 'docs', 'zip', 'pptx, jpg, jpeg, png'}
+ALLOWED_EXTENSIONS = {'doc', 'ppt', 'pdf', 'docs', 'zip', 'pptx', 'jpg', 'jpeg', 'png'}
 CHUNK_SIZE = 1024 * 1024
 
 def allowed_file(filename, ALLOWED_EXTENSIONS):
@@ -20,7 +20,6 @@ def allowed_file(filename, ALLOWED_EXTENSIONS):
         return False
     
 async def upload_file(file, upload_dir):
-    
     # Check if directory exists, if not create it
     isExist = os.path.exists(upload_dir)
     if not isExist:
@@ -33,9 +32,11 @@ async def upload_file(file, upload_dir):
         # Check if file has correct file extension
         if f and allowed_file(f.filename, ALLOWED_EXTENSIONS):
             filename = secure_filename(f.filename)
+           
             # Save file
             try:
                 filepath = os.path.join(upload_dir, filename)
+               
                 async with aiofiles.open(filepath, 'wb') as data:
                     while chunk := await f.read(CHUNK_SIZE):
                         await data.write(chunk)
@@ -47,7 +48,6 @@ async def upload_file(file, upload_dir):
                 print(filename, " saved")
 
 async def upload_one_file(file, upload_dir):
-    
     # Check if directory exists, if not create it
     isExist = os.path.exists(upload_dir)
     if not isExist:

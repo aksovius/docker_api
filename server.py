@@ -42,22 +42,24 @@ async def result_endpoint(folder: str, filename: str):
 @app.post('/file')
 async def file_upload_endpoint(folder: Optional[str] ="temp", 
                               file: List[UploadFile] = File(...)):
-    print(folder)
-    
+    print("folder: " + folder)
+    print(len(file))
     upload_dir = os.path.join(DATA_DIR, folder)
     await upload_file(file, upload_dir)
+    if len(file): 
+        return  {"success": 1, "file": {"url": f"https://210.102.178.108.nip.io/resource/file?folder={folder}&filename={file[0].filename}"}}
     return {"success": 1}
 
 # upload 1 image for pages
-@app.post('/image')
-async def image_upload_endpoint(folder: Optional[str] ="temp", 
-                              image: UploadFile = File(...)):
+# @app.post('/image')
+# async def image_upload_endpoint(folder: Optional[str] ="temp", 
+#                               image: UploadFile = File(...)):
     
-    print(folder)
-    print(image)
-    upload_dir = os.path.join(DATA_DIR, folder)
-    await upload_one_file(image, upload_dir)
-    return {"success": 1, "file": {"url": f"https://210.102.178.108.nip.io/resource/file?folder={folder}&filename={image.filename}"}}
+#     print(folder)
+#     print(image)
+#     upload_dir = os.path.join(DATA_DIR, folder)
+#     await upload_one_file(image, upload_dir)
+#     return {"success": 1, "file": {"url": f"https://210.102.178.108.nip.io/resource/file?folder={folder}&filename={image.filename}"}}
 # @app.websocket("/graphql/wss")
 # async def websocket_endpoint(websocket: WebSocket):
 #     sender = websocket.cookies.get("X-Authorization")
