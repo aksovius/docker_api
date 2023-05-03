@@ -1,5 +1,5 @@
 import strawberry
-from fastapi import FastAPI, UploadFile, File
+from fastapi import FastAPI, Request, Response, UploadFile, File
 from strawberry.asgi import GraphQL
 import mutations
 import queries
@@ -50,32 +50,20 @@ async def file_upload_endpoint(folder: Optional[str] ="temp",
         return  {"success": 1, "file": {"url": f"https://210.102.178.108.nip.io/resource/file?folder={folder}&filename={file[0].filename}"}}
     return {"success": 1}
 
-# upload 1 image for pages
-# @app.post('/image')
-# async def image_upload_endpoint(folder: Optional[str] ="temp", 
-#                               image: UploadFile = File(...)):
-    
-#     print(folder)
-#     print(image)
-#     upload_dir = os.path.join(DATA_DIR, folder)
-#     await upload_one_file(image, upload_dir)
-#     return {"success": 1, "file": {"url": f"https://210.102.178.108.nip.io/resource/file?folder={folder}&filename={image.filename}"}}
-# @app.websocket("/graphql/wss")
-# async def websocket_endpoint(websocket: WebSocket):
-#     sender = websocket.cookies.get("X-Authorization")
-#     export = Exporter()
-#     print('Auth:', sender)
-    # if sender:
-    #     await websocket.accept()
-    #     try:
-    #         for i in range(60):
-    #             #export.start()
-    #             #await websocket.send_text(json.dumps(queries.get_containers(ws=True)))
-    #             print((60 - i)*5, 'sec left')
-    #             try:
-    #                 await asyncio.sleep(5)
-    #             except asyncio.CancelledError:
-    #                 print("CancelledError")
-    #     except WebSocketDisconnect:
-            
-    #         print('disconnected')
+@app.get('/auth')
+async def verify_user_container(request: Request, 
+                                response: Response,
+                                token: Optional[str] = None
+                               ):
+    auth_header = request.headers.get("Authorization")
+    uri = request.headers.get("x-original-uri")
+    cookie = request.headers.get("Cookie")
+    print(cookie)
+    token = uri.split('token=')[-1]
+
+    print(token)
+    #print(request.headers)
+    if auth_header == None : 
+        print("Unauthorized")
+        response.status_code = 200
+    else: response.status_code = 200
