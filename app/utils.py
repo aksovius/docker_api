@@ -4,10 +4,8 @@ import aiofiles
 from fastapi.exceptions import HTTPException
 import zipfile
 from io import BytesIO
-from fastapi.responses import FileResponse, StreamingResponse
-
-ALLOWED_EXTENSIONS = {'doc', 'ppt', 'pdf', 'docs', 'zip', 'pptx', 'jpg', 'jpeg', 'png'}
-CHUNK_SIZE = 1024 * 1024
+from fastapi.responses import  StreamingResponse
+from config import ALLOWED_EXTENSIONS, CHUNK_SIZE
 
 def allowed_file(filename, ALLOWED_EXTENSIONS):
     """Check if the file extension is allowed."""

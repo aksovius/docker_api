@@ -1,7 +1,12 @@
-fastapi
-uvicorn
-strawberry
+strawberry-graphql
 docker
 nvitop
-websockets
-influxdb
+influxdb-client
+pyjwt
+motor
+aiofiles
+nvitop
+fastapi 
+uvicorn[standard]
+werkzeug
+python-multipart
