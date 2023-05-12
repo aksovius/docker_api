@@ -24,7 +24,7 @@ async def get_user_password(userId):
 
 async def run_container(name, port, gpu, device, userDir, userId):
     password = await get_user_password(userId)
-    print("password: " + password)
+    #print("password: " + password)
     container = client.containers.run(
                 'tf2:1.0', 
                 detach=True, 

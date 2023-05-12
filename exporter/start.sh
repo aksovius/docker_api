@@ -1,0 +1,1 @@
+pm2 start exporters.py --name exporters --interpreter /home/gil/anaconda3/envs/fast/bin/python

@@ -4,14 +4,14 @@ import docker
 import time
 import datetime
 from nvitop import MigDevice
-
-
+import os
+os.environ.get("HOST", "0.0.0.0")
 SLEEP = 5
 DOCKER_BUCKET = "docker"
 GPU_BUCKET = "gpu"
 ORGANIZATION = "my-org"
 TOKEN = "BwsRD6-_mbeV8IQUJjcAKJuj2pZir0pp9Cy1bezT3z0MJ5fkqD5wmhY_l5cnCbYLlgxsy0L8GkuJ0PM_n-sk6Q=="
-URL = "http://localhost:8076"
+URL = "http://172.17.0.1:8076"
 
 
 docker_client = docker.from_env()

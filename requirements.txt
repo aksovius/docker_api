@@ -5,7 +5,6 @@ influxdb-client
 pyjwt
 motor
 aiofiles
-nvitop
 fastapi 
 uvicorn[standard]
 werkzeug
