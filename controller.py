@@ -65,7 +65,7 @@ class DockerController:
                     print("Run: " + container.short_id  + " gpu: " + str(gpu) + " device: " + str(device))
     def load_all_containers(self):
         for container in self.client.containers.list():
-            if container.image.tags == ['tf2:0.05']:
+            if container.image.tags == ['tf2:1.0']:
                 container.exec_run('conda run -n tf python /home/user/workdir/example/unet.py', detach=True)
     def load_one(self, id):
         for container in self.client.containers.list():
