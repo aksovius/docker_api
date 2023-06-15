@@ -30,6 +30,7 @@ async def run_container(name, port, gpu, device, userDir, userId):
                 detach=True, 
                 ports={'8080/tcp': port}, 
                 volumes={IMAGE_DIR: {'bind': '/data', 'mode': 'ro'}, 
+                         '/home/gil/gcubme3/smart_health_care': {'bind': '/nas', 'mode': 'ro'},
                         EXAMPLES_DIR: {'bind': '/home/user/workdir/notices', 'mode': 'ro'},
                         '/etc/timezone': {'bind': '/etc/timezone', 'mode': 'ro'}, 
                         '/etc/localtime': {'bind': '/etc/localtime', 'mode': 'ro'},

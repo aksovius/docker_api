@@ -8,7 +8,7 @@ INFLUXDB = "http://host.docker.internal:8076"
 MONGODB = "mongodb://host.docker.internal:27017"
 
 # Allowed file extensions
-ALLOWED_EXTENSIONS = {'doc', 'ppt', 'pdf', 'docs', 'zip', 'pptx', 'jpg', 'jpeg', 'png'}
+ALLOWED_EXTENSIONS = {'doc', 'ppt', 'pdf', 'docs', 'zip', 'pptx', 'jpg', 'jpeg', 'png', 'hwp'}
 
 # File chunk size
 CHUNK_SIZE = 1024 * 1024

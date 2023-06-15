@@ -56,7 +56,7 @@ async def upload_one_file(file, upload_dir):
     if file.filename == '':
         next()
     # Check if file has correct file extension
-    if file and allowed_file(file.filename, "jpg, jpeg, png"):
+    if file and allowed_file(file.filename, ALLOWED_EXTENSIONS):
         filename = secure_filename(file.filename)
         # Save file
         try:
